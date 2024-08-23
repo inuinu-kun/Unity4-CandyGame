@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CandyManager : MonoBehaviour
 {
-    const int DefaultCandyAmount = 30;
+    const int DefaultCandyAmount = 30;//const 定数　※後から変更不可
     const int RecoverySeconds = 10;
 
     // 現在のキャンディのストック数
@@ -12,6 +12,7 @@ public class CandyManager : MonoBehaviour
     // ストック回復までの残り秒数 
     int counter;
 
+    //キャンディの消費
     public void ConsumeCandy()
     {
         if (candy > 0) candy--;
@@ -22,6 +23,7 @@ public class CandyManager : MonoBehaviour
         return candy;
     }
 
+    //キャンディの補充
     public void AddCandy(int amount)
     {
         candy += amount;
@@ -29,7 +31,7 @@ public class CandyManager : MonoBehaviour
 
     void OnGUI()
     {
-        GUI.color = Color.black;
+        GUI.color = Color.black;//簡易UIの文字色を黒色に
 
         // キャンディのストック数を表示
         string label = "Candy : " + candy;
@@ -46,19 +48,19 @@ public class CandyManager : MonoBehaviour
         // 回復カウントをしていないときにカウントをスタートさせる
         if (candy < DefaultCandyAmount && counter <= 0)
         {
-            StartCoroutine(RecoverCandy());
+            StartCoroutine(RecoverCandy());//30を下回ったらコルーチンの発動
         }
     }
 
-    IEnumerator RecoverCandy()
+    IEnumerator RecoverCandy()//IEnumerator コルーチンで発動するもの
     {
         counter = RecoverySeconds;
 
         // 1秒ずつカウントを進める
         while (counter > 0)
         {
-            yield return new WaitForSeconds(1.0f);
-            counter--;
+            yield return new WaitForSeconds(1.0f);//yield return で後半文分だけ待つ
+           　counter--;
         }
 
         candy++;
